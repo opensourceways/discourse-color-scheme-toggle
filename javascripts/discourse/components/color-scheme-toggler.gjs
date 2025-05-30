@@ -3,7 +3,7 @@ import { tracked } from "@glimmer/tracking";
 import { action } from "@ember/object";
 import { service } from "@ember/service";
 import DButton from "discourse/components/d-button";
-import { i18n } from "discourse-i18n";
+import i18n from "discourse-common/helpers/i18n";
 import {
   COLOR_SCHEME_OVERRIDE_KEY,
   colorSchemeOverride,
@@ -15,7 +15,7 @@ export default class ColorSchemeToggler extends Component {
 
   @tracked
   storedOverride = this.keyValueStore.getItem(COLOR_SCHEME_OVERRIDE_KEY);
-
+  
   get toggleButtonIcon() {
     switch (this.OSMode) {
       case "dark":
@@ -42,6 +42,7 @@ export default class ColorSchemeToggler extends Component {
           document.body.classList.remove("dark");
         } else {
           this.keyValueStore.setItem(COLOR_SCHEME_OVERRIDE_KEY, "dark");
+          document.body.classList.add("dark");
         }
         break;
       case "dark":
@@ -49,6 +50,7 @@ export default class ColorSchemeToggler extends Component {
           this.keyValueStore.setItem(COLOR_SCHEME_OVERRIDE_KEY, "light");
           document.body.classList.remove("light");
         } else {
+          document.body.classList.add("dark");
           this.keyValueStore.removeItem(COLOR_SCHEME_OVERRIDE_KEY);
         }
         break;
